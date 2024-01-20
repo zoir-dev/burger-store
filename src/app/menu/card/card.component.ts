@@ -39,12 +39,10 @@ export class CardComponent implements OnDestroy, OnInit {
   }
 
   onCheckOut() {
-    telegram.MainButton.text = 'Bla bla';
+    telegram.MainButton.text = 'Sotib olish';
     telegram.MainButton.show()
     telegram.MainButton.onClick(async () => {
-      telegram.MainButton.showProgress()
       await telegram.sendData(JSON.stringify(this.storedCards))
-      telegram.MainButton.hideProgress()
       telegram.MainButton.hide()
       telegram.close()
     })
