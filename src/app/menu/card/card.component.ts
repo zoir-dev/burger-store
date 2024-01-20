@@ -91,6 +91,8 @@ export class CardComponent implements OnDestroy, OnInit {
 
     this.cardsService.addToStore(index);
     this.onCheckOut()
+    telegram.sendData(JSON.stringify(this.storedCards))
+    telegram.close()
   }
 
   ngOnDestroy(): void {
