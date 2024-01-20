@@ -45,7 +45,7 @@ export class CardComponent implements OnDestroy, OnInit {
 
 
   addToStore(index: number) {
-    // this.onCheckOut()
+    this.onCheckOut()
     this.cardsService.storedCards$.pipe(takeUntil(this.sub)).subscribe(val => this.storedCards = val)
     if (index >= 0) {
       const cardElement = document.getElementById(`card-${index}`);
