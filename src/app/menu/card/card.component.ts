@@ -45,7 +45,8 @@ export class CardComponent implements OnDestroy, OnInit {
 
 
   addToStore(index: number) {
-    this.onCheckOut()
+    telegram = window.Telegram.WebApp
+    telegram.ready()
     this.cardsService.storedCards$.pipe(takeUntil(this.sub)).subscribe(val => this.storedCards = val)
     if (index >= 0) {
       const cardElement = document.getElementById(`card-${index}`);
@@ -53,7 +54,7 @@ export class CardComponent implements OnDestroy, OnInit {
       const menuIcon = document.getElementById('store_menu')
       const icon = window.innerWidth >= 800 ? storeIcon : menuIcon
 
-      if (cardElement && icon && !this.storedCards.find(f => f.id === index)) {
+      if (cardElement && icon && !this.storedCards.find(f => f.id === index) && telegram) {
         gsap.to(cardElement, {
           duration: 0.5,
           scale: 0.5,
@@ -89,7 +90,7 @@ export class CardComponent implements OnDestroy, OnInit {
     }
 
     this.cardsService.addToStore(index);
-    // this.cardsService.test().subscribe(val => console.log(val))
+    this.onCheckOut()
   }
 
   ngOnDestroy(): void {
