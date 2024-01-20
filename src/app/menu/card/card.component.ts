@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { card } from '../../../utils/cardType';
@@ -8,6 +8,14 @@ import { CardsService } from '../../../utils/services/cards.service';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 
+declare global {
+  interface Window {
+    Telegram: any;
+  }
+}
+
+let telegram: any = null
+
 @Component({
   selector: 'app-card',
   standalone: true,
@@ -15,7 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
-export class CardComponent implements OnDestroy {
+export class CardComponent implements OnDestroy, OnInit {
   @Input() card!: card
   @Input() i!: number
 
@@ -25,15 +33,27 @@ export class CardComponent implements OnDestroy {
 
   constructor(private cardsService: CardsService) { }
 
+  ngOnInit(): void {
+    telegram = window.Telegram.WebApp
+    telegram.ready()
+  }
+
+  onCheckOut() {
+    telegram.MainButton.text = 'Bla bla';
+    telegram.MainButton.show()
+  }
+
 
   addToStore(index: number) {
+    // this.onCheckOut()
     this.cardsService.storedCards$.pipe(takeUntil(this.sub)).subscribe(val => this.storedCards = val)
     if (index >= 0) {
       const cardElement = document.getElementById(`card-${index}`);
       const storeIcon = document.getElementById('store');
-      const tabContent = document.querySelector('.mat-tab-content[aria-hidden="true"]');
+      const menuIcon = document.getElementById('store_menu')
+      const icon = window.innerWidth >= 800 ? storeIcon : menuIcon
 
-      if (cardElement && storeIcon && !this.storedCards.find(f => f.id === index)) {
+      if (cardElement && icon && !this.storedCards.find(f => f.id === index)) {
         gsap.to(cardElement, {
           duration: 0.5,
           scale: 0.5,
@@ -43,8 +63,8 @@ export class CardComponent implements OnDestroy {
           onComplete: () => {
             gsap.to(cardElement, {
               duration: 0.5,
-              x: storeIcon.getBoundingClientRect().left - cardElement.getBoundingClientRect().left,
-              y: storeIcon.getBoundingClientRect().top - cardElement.getBoundingClientRect().top,
+              x: icon.getBoundingClientRect().left - cardElement.getBoundingClientRect().left,
+              y: icon.getBoundingClientRect().top - cardElement.getBoundingClientRect().top,
               scale: 0,
               ease: 'power3.in',
               onComplete: () => {
