@@ -1,0 +1,15 @@
+ <mat-card class="example-card h-full !shadow-lg hover:!shadow-2xl transition-shadow duration-500 flex flex-col justify-between !rounded-md" id="{{'card-'+i}}">
+    <div>
+    <img mat-card-image src={{card.img}} class="!rounded-t-md" loading="lazy" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <h2 class="text-2xl py-[5px]">{{card.name}}</h2>
+      <p>
+        {{card.des}}
+      </p>
+    </mat-card-content>
+  </div>
+  <mat-card-actions class="flex flex-nowrap justify-between">
+      <button mat-raised-button color="primary" (click)="addToStore(i)"><mat-icon>add_shopping_cart</mat-icon></button>
+      <button mat-icon-button color="warn"><mat-icon>thumb_up</mat-icon></button>
+  </mat-card-actions>
+</mat-card>

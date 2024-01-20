@@ -1,0 +1,32 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav !w-[300px] !pt-[30px]"
+      [attr.role]="'navigation'"
+      [mode]="'over'"
+      [position]="'end'"
+      opened="{{open}}" (closed)="toggle(false)">
+    <mat-toolbar class="flex justify-center">
+      <h2 class="!text-2xl !font-bold">Menu</h2>
+    </mat-toolbar>
+    <mat-nav-list class="flex flex-col">
+      <a *ngFor="let item of links" routerLink="{{item.href}}" class="flex items-center gap-[5px] hover:opacity-70 duration-300 text-[18px] text-primary px-[15px] py-[7px]" routerLinkActive="!font-bold" routerLinkActive="!bg-primary !text-[white]" (click)="toggle(false)">{{item.name}} <mat-icon>{{item?.icon}}</mat-icon></a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="flex items-center justify-between">
+      <h2 class="!text-2xl !font-bold">Burger store</h2>
+      <div class="flex items-center">
+        <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="toggle(true)" class="!hidden smd:!flex">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+    </div>
+    <div class="flex items-center gap-[20px] smd:hidden">
+      <a *ngFor="let item of links" routerLink="{{item.href}}" class="flex items-center gap-[5px] hover:opacity-70 duration-300" routerLinkActive="!font-bold" matBadge="{{item.href==='store'?(storedCardsLength.length||''):''}}" matBadgeColor="warn" id="{{item.href==='store'?'store':''}}" >{{item.name}} <mat-icon>{{item?.icon}}</mat-icon></a>
+    </div>
+    </mat-toolbar>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

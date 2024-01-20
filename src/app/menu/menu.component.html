@@ -1,0 +1,46 @@
+<!-- <div class="container">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" class="!pb-[30px]"[disableRipple]="false">
+    <mat-tab label="Tab 1">
+    </mat-tab>
+    <mat-tab label="Tab 2">
+      Content 2
+    </mat-tab>
+    <mat-tab label="Tab 3">
+      Content 3
+    </mat-tab>
+    <mat-tab label="Tab 4">
+      Content 4
+    </mat-tab>
+  </mat-tab-group>
+</div> -->
+
+<div class="container flex items-stretch flex-wrap pt-[50px] gap-[20px]">
+    <app-card *ngFor="let card of cards,let i=index" [card]="card" [i]="i"></app-card>
+  </div>
+
+
+<!--
+<div class="w-full max-w-[200px]">
+  <div class="relative right-0">
+    <ul class="relative flex flex-wrap p-1 list-none rounded-lg" data-tabs="tabs" role="list">
+      <li class="z-30 flex-auto text-center" *ngFor="let tab of tabs; let i = index">
+        <a
+          (click)="setActiveTab(i)"
+          [class.active]="activeTab === i"
+          class="z-30 flex items-center justify-center w-full px-0 py-1 mb-0 transition-all ease-in-out border-0 rounded-lg cursor-pointer text-slate-700 bg-inherit"
+          data-tab-target="" role="tab" [attr.aria-selected]="activeTab === i">
+          <span class="{ml-1 active:text-[white}">{{ tab.title }}</span>
+        </a>
+      </li>
+    </ul>
+    <div
+      *ngIf="activeTab !== null"
+      class="z-30 absolute bottom-0 left-0 bg-primary h-[4px] rounded-full transition-all duration-500 ease-in-out"
+      [style.width.%]="100 / tabs.length"
+      [style.transform]="'translate3d(' + (activeTab * 100) + '%, 0px, 0px)'"
+    ></div>
+  </div>
+</div> -->
+
+
+
