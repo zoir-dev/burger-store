@@ -5,7 +5,7 @@ import { card } from '../../../utils/cardType';
 import { MatButtonModule } from '@angular/material/button';
 import gsap from 'gsap';
 import { CardsService } from '../../../utils/services/cards.service';
-import { Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 
 declare global {
@@ -41,6 +41,13 @@ export class CardComponent implements OnDestroy, OnInit {
   onCheckOut() {
     telegram.MainButton.text = 'Bla bla';
     telegram.MainButton.show()
+    telegram.MainButton.onClick(async () => {
+      telegram.MainButton.showProgress()
+      await telegram.sendData(JSON.stringify(this.storedCards))
+      telegram.MainButton.hideProgress()
+      telegram.MainButton.hide()
+      telegram.close()
+    })
   }
 
 
@@ -91,8 +98,6 @@ export class CardComponent implements OnDestroy, OnInit {
 
     this.cardsService.addToStore(index);
     this.onCheckOut()
-    telegram.sendData(JSON.stringify(this.storedCards))
-    telegram.close()
   }
 
   ngOnDestroy(): void {
